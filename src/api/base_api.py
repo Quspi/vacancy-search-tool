@@ -11,7 +11,7 @@ class BaseAPI(ABC):
     """
 
     @abstractmethod
-    def _connect(self) -> requests.Response:
+    def _make_request(self) -> requests.Response:
         """
         Абстрактный метод для выполнения подключения к API.
         Должен быть реализован в дочерних классах.

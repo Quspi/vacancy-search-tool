@@ -50,7 +50,7 @@ class HeadHunterAPI(BaseAPI):
 
         while page < 20:
             self.__set_page(page)
-            vacancies_json = self._connect().json()["items"]
+            vacancies_json = self._make_request().json()["items"]
 
             if not vacancies_json:
                 break
@@ -60,7 +60,7 @@ class HeadHunterAPI(BaseAPI):
 
         return vacancies
 
-    def _connect(self) -> requests.Response:
+    def _make_request(self) -> requests.Response:
         """
         Выполняет HTTP GET-запрос к API HeadHunter.
 
