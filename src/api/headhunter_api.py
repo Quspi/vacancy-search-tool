@@ -50,7 +50,7 @@ class HeadHunterAPI(BaseAPI):
 
         while page < 20:
             self.__set_page(page)
-            vacancies_json = self._make_request().json()["items"]
+            vacancies_json = self._make_request().json().get("items", [])
 
             if not vacancies_json:
                 break
