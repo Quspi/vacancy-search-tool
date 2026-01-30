@@ -2,7 +2,7 @@ from typing import Any
 
 
 class Validator:
-    """Класс для валидации данных с помощью статических методов."""
+    """Класс для валидации данных."""
 
     @staticmethod
     def str_validation(value: Any, message: str) -> None:
@@ -11,6 +11,7 @@ class Validator:
 
         :param value: Проверяемое значение.
         :param message: Сообщение об ошибке, если проверка не пройдена.
+
         :raises ValueError: Если значение не является строкой.
         """
         if not isinstance(value, str):
@@ -23,6 +24,7 @@ class Validator:
 
         :param value: Проверяемое значение.
         :param message: Сообщение об ошибке, если проверка не пройдена.
+
         :raises TypeError: Если значение не является целым числом.
         """
         if not isinstance(value, int):
@@ -31,10 +33,11 @@ class Validator:
     @staticmethod
     def positive_integer_validation(value: int, message: str) -> None:
         """
-        Проверяет, является ли число положительным целым.
+        Проверяет, является ли число и положительным.
 
         :param value: Проверяемое число.
         :param message: Сообщение об ошибке, если значение отрицательное.
+
         :raises TypeError: Если значение не является целым числом.
         :raises ValueError: Если число отрицательное.
         """
