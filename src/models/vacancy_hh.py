@@ -158,7 +158,7 @@ class VacancyHH(BaseVacancy):
             vacancies_dict.get("area", {}).get("name", ""),
         )
 
-    def to_dict(self) -> dict[str, int]:
+    def to_dict(self) -> dict[str, str | int]:
         """
         Преобразует объект вакансии в словарь.
 
@@ -178,7 +178,7 @@ class VacancyHH(BaseVacancy):
             "Ссылка на вакансию": self.url,
             "Обязанности": self.responsibility,
             "Опыт работы": self.experience,
-            "Город": self.area
+            "Город": self.area,
         }
 
     @staticmethod
