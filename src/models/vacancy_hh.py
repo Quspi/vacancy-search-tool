@@ -158,6 +158,29 @@ class VacancyHH(BaseVacancy):
             vacancies_dict.get("area", {}).get("name", ""),
         )
 
+    def to_dict(self) -> dict[str, int]:
+        """
+        Преобразует объект вакансии в словарь.
+
+        :return: Словарь с ключами:
+        "Название вакансии": (str),
+        "Заработная плата": (int),
+        "Дата публикации": (str),
+        "Ссылка на вакансию": (str),
+        "Обязанности": (str),
+        "Опыт работы": (str),
+        "Город": (str).
+        """
+        return {
+            "Название вакансии": self.name,
+            "Заработная плата": self.salary,
+            "Дата публикации": self.date,
+            "Ссылка на вакансию": self.url,
+            "Обязанности": self.responsibility,
+            "Опыт работы": self.experience,
+            "Город": self.area
+        }
+
     @staticmethod
     def __set_salary(salary: Optional[dict]) -> int:
         """
