@@ -121,3 +121,8 @@ class BaseVacancy(ABC):
     def from_list(cls, vacancies_list: list[dict]) -> list["BaseVacancy"]:
         """Создаёт список экземпляров вакансий из списка словарей."""
         ...
+
+    @abstractmethod
+    def to_dict(self) -> dict[str, int]:
+        """Преобразует объект вакансии в словарь."""
+        ...
