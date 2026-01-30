@@ -23,7 +23,6 @@ class HeadHunterAPI(BaseAPI):
         Устанавливает базовые параметры запроса.
         """
         self.__params = {
-            "page": 0,
             "per_page": 100,
             "area": "113",
             "currency": "RUR",
@@ -36,12 +35,16 @@ class HeadHunterAPI(BaseAPI):
         """
         Получает список вакансий по заданным параметрам поиска.
 
-        :param search_text: Текст для поиска вакансий.
-        :param salary: Минимальная заработная плата (положительное целое число).
-        :param excluded_text: Текст для исключения вакансий (опционально).
-        :return: Список словарей с данными вакансий.
+        :param search_text: Текст для поиска в вакансиях.
+        :param salary: Минимальная зарплата для поиска в вакансиях.
+        :param excluded_text: Текст для исключения из поиска в вакансиях.
+
+        :return: Список словарей с данными о вакансиях.
+
         :raises ValueError: Если параметры не проходят валидацию.
-        :raises ConnectionError: При ошибках соединения с API.
+        :raises TypeError: Если тип параметра не соответствует ожидаемому.
+        :raises ConnectionError: При ошибках HTTP или соединения.
+        :raises TimeoutError: При превышении времени ожидания.
         """
         self.__set_search_params(search_text, salary, excluded_text)
 
@@ -49,7 +52,7 @@ class HeadHunterAPI(BaseAPI):
         page = 0
 
         while page < 20:
-            self.__set_page(page)
+            self.__params["page"] = page
             vacancies_json = self._make_request().json().get("items", [])
 
             if not vacancies_json:
@@ -65,6 +68,7 @@ class HeadHunterAPI(BaseAPI):
         Выполняет HTTP GET-запрос к API HeadHunter.
 
         :return: Объект Response библиотеки requests.
+
         :raises ConnectionError: При ошибках HTTP или соединения.
         :raises TimeoutError: При превышении времени ожидания.
         """
@@ -88,9 +92,10 @@ class HeadHunterAPI(BaseAPI):
         """
         Устанавливает параметры поиска вакансий с валидацией.
 
-        :param search_text: Текст для поиска.
-        :param salary: Минимальная зарплата.
-        :param excluded_text: Текст для исключения.
+        :param search_text: Текст для поиска в вакансиях.
+        :param salary: Минимальная зарплата для поиска в вакансиях.
+        :param excluded_text: Текст для исключения из поиска в вакансиях.
+
         :raises ValueError: Если параметры не проходят валидацию.
         :raises TypeError: Если тип параметра не соответствует ожидаемому.
         """
@@ -104,11 +109,3 @@ class HeadHunterAPI(BaseAPI):
         if excluded_text is not None:
             Validator.str_validation(excluded_text, "Параметр 'excluded_text' должен быть строкой")
             self.__params["excluded_text"] = excluded_text
-
-    def __set_page(self, page: int) -> None:
-        """
-        Устанавливает номер страницы для пагинации.
-
-        :param page: Номер страницы.
-        """
-        self.__params["page"] = page
