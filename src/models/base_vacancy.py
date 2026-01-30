@@ -123,6 +123,6 @@ class BaseVacancy(ABC):
         ...
 
     @abstractmethod
-    def to_dict(self) -> dict[str, int]:
+    def to_dict(self) -> dict[str, str | int]:
         """Преобразует объект вакансии в словарь."""
         ...
