@@ -25,18 +25,16 @@ class HeadHunterAPI(BaseAPI):
         self.__params = {
             "per_page": 100,
             "area": "113",
-            "currency": "RUR",
             "period": 7,
         }
 
     def get_vacancies(
-        self, search_text: str, salary: int, excluded_text: Optional[str] = None
+        self, search_text: str, excluded_text: Optional[str] = None
     ) -> list[dict[str, Any]]:
         """
         Получает список вакансий с зарплатой в рублях по заданным параметрам поиска.
 
         :param search_text: Текст для поиска в вакансиях.
-        :param salary: Минимальная зарплата для поиска в вакансиях.
         :param excluded_text: Текст для исключения из поиска в вакансиях.
 
         :return: Список словарей с данными о вакансиях.
@@ -46,7 +44,7 @@ class HeadHunterAPI(BaseAPI):
         :raises ConnectionError: При ошибках HTTP или соединения.
         :raises TimeoutError: При превышении времени ожидания.
         """
-        self.__set_search_params(search_text, salary, excluded_text)
+        self.__set_search_params(search_text, excluded_text)
 
         vacancies = []
         page = 0
@@ -92,23 +90,18 @@ class HeadHunterAPI(BaseAPI):
 
         return response
 
-    def __set_search_params(self, search_text: str, salary: int, excluded_text: Optional[str] = None) -> None:
+    def __set_search_params(self, search_text: str, excluded_text: Optional[str] = None) -> None:
         """
         Устанавливает параметры поиска вакансий с валидацией.
 
         :param search_text: Текст для поиска в вакансиях.
-        :param salary: Минимальная зарплата для поиска в вакансиях.
         :param excluded_text: Текст для исключения из поиска в вакансиях.
 
         :raises ValueError: Если параметры не проходят валидацию.
         :raises TypeError: Если тип параметра не соответствует ожидаемому.
         """
         Validator.str_validation(search_text, "Параметр 'search_text' должен быть строкой")
-        Validator.integer_validation(salary, "Параметр 'salary' должен быть числом")
-        Validator.positive_integer_validation(salary, "Параметр 'salary' должен быть положительным числом")
-
         self.__params["text"] = search_text
-        self.__params["salary"] = salary
 
         if excluded_text is not None:
             Validator.str_validation(excluded_text, "Параметр 'excluded_text' должен быть строкой")
