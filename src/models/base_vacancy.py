@@ -118,7 +118,7 @@ class BaseVacancy(ABC):
 
     @classmethod
     @abstractmethod
-    def from_list(cls, vacancies_list: list[dict]) -> list["BaseVacancy"]:
+    def from_api_list(cls, vacancies_list: list[dict]) -> list["BaseVacancy"]:
         """Создаёт список экземпляров вакансий из списка словарей."""
         ...
 

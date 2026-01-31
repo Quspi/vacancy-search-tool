@@ -124,7 +124,7 @@ class VacancyHH(BaseVacancy):
         return self.salary >= other.salary
 
     @classmethod
-    def from_list(cls, vacancies_list: list[dict]) -> list["BaseVacancy"]:
+    def from_api_list(cls, vacancies_list: list[dict]) -> list["BaseVacancy"]:
         """
         Создаёт список объектов VacancyHH из списка словарей с данными вакансий.
 
@@ -134,13 +134,13 @@ class VacancyHH(BaseVacancy):
 
         :return: Список объектов VacancyHH.
         """
-        return [cls.from_dict(vacancy) for vacancy in vacancies_list]
+        return [cls.from_api(vacancy) for vacancy in vacancies_list]
 
     @classmethod
     def from_api(cls, vacancies_dict: dict) -> "VacancyHH":
         """
         Создаёт экземпляр VacancyHH из словаря с данными вакансии.
-        Для отсутствующих ключей используются пустые строки или 0.
+        Для отсутствующих ключей используются пустые строки.
 
         :param vacancies_dict: Словарь, содержащий ключи API HeadHunter:
         name, salary, published_at, alternate_url,
