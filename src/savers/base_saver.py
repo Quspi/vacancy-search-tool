@@ -79,6 +79,27 @@ class BaseSaver(ABC):
         """
         ...
 
+    @staticmethod
+    def _validate_vacancy(vacancy: dict) -> None:
+        """
+        Проверяет, что словарь вакансии содержит все обязательные ключи.
+
+        :param vacancy: Словарь с данными вакансии.
+
+        :raises ValueError: Если отсутствует хотя бы один обязательный ключ.
+        """
+        required_keys = {
+            "Название вакансии",
+            "Заработная плата",
+            "Дата публикации",
+            "Ссылка на вакансию",
+            "Обязанности",
+            "Опыт работы",
+            "Город",
+        }
+        if not required_keys.issubset(vacancy.keys()):
+            raise ValueError("Ошибка в структуре данных вакансии")
+
     def _load_cache(self) -> None:
         """
         Загружает URL вакансий из файла в кэш.
