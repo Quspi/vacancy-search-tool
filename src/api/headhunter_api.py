@@ -59,8 +59,8 @@ class HeadHunterAPI(BaseAPI):
                 break
 
             for vacancy in vacancies_json:
-                salary = vacancy.get("salary")
-                if salary is None or salary.get("currency") == "RUR":
+                vacancy_salary = vacancy.get("salary")
+                if vacancy_salary is None or vacancy_salary.get("currency") == "RUR":
                     vacancies.append(vacancy)
 
             page += 1
