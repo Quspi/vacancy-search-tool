@@ -28,9 +28,7 @@ class HeadHunterAPI(BaseAPI):
             "period": 7,
         }
 
-    def get_vacancies(
-        self, search_text: str, excluded_text: Optional[str] = None
-    ) -> list[dict[str, Any]]:
+    def get_vacancies(self, search_text: str, excluded_text: Optional[str] = None) -> list[dict[str, Any]]:
         """
         Получает список вакансий с зарплатой в рублях по заданным параметрам поиска.
 
