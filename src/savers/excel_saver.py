@@ -41,9 +41,10 @@ class ExcelSaver(BaseSaver):
         except pd.errors.EmptyDataError as error:
             raise ValueError("Файл пуст или поврежден") from error
 
-    def add_vacancy(self, vacancy: dict[str, int | str]) -> None:
+    def add_vacancy(self, vacancy: dict[str, int | str]) -> bool:
         """
         Добавляет вакансию в Excel-файл.
+        Возвращает True/False в зависимости от успешности операции.
 
         :param vacancy: Словарь с данными о вакансии.
 
@@ -53,7 +54,7 @@ class ExcelSaver(BaseSaver):
 
         vacancy_url = vacancy["Ссылка на вакансию"]
         if vacancy_url in self._url_cache:
-            return None
+            return False
 
         try:
             df = pd.read_excel(self._path_to_file)
@@ -66,11 +67,12 @@ class ExcelSaver(BaseSaver):
         result_data.to_excel(self._path_to_file, index=False)
         self._url_cache.add(vacancy_url)
 
-        return None
+        return True
 
-    def delete_vacancy(self, vacancy: dict[str, int | str]) -> None:
+    def delete_vacancy(self, vacancy: dict[str, int | str]) -> bool:
         """
         Удаляет вакансию из Excel-файла.
+        Возвращает True/False в зависимости от успешности операции.
 
         :param vacancy: Словарь с данными вакансии.
 
@@ -82,7 +84,7 @@ class ExcelSaver(BaseSaver):
 
         vacancy_url = vacancy["Ссылка на вакансию"]
         if vacancy_url not in self._url_cache:
-            return None
+            return False
 
         try:
             df = pd.read_excel(self._path_to_file)
@@ -96,4 +98,4 @@ class ExcelSaver(BaseSaver):
         new_df.to_excel(self._path_to_file, index=False)
         self._url_cache.remove(vacancy_url)
 
-        return None
+        return True

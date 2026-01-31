@@ -43,9 +43,10 @@ class JSONSaver(BaseSaver):
         except json.JSONDecodeError as error:
             raise ValueError("Файл поврежден или пуст") from error
 
-    def add_vacancy(self, vacancy: dict[str, str | int]) -> None:
+    def add_vacancy(self, vacancy: dict[str, str | int]) -> bool:
         """
         Добавляет вакансию в JSON-файл.
+        Возвращает True/False в зависимости от успешности операции.
 
         :param vacancy: Словарь с данными о вакансии.
 
@@ -55,7 +56,7 @@ class JSONSaver(BaseSaver):
 
         vacancy_url = vacancy["Ссылка на вакансию"]
         if vacancy_url in self._url_cache:
-            return None
+            return False
 
         try:
             with open(self._path_to_file, "r+", encoding="utf-8") as file:
@@ -73,9 +74,12 @@ class JSONSaver(BaseSaver):
                 json.dump([vacancy], file, indent=4, ensure_ascii=False)
                 self._url_cache.add(vacancy_url)
 
-    def delete_vacancy(self, vacancy: dict[str, str | int]) -> None:
+        return True
+
+    def delete_vacancy(self, vacancy: dict[str, str | int]) -> bool:
         """
         Удаляет вакансию из JSON-файла.
+        Возвращает True/False в зависимости от успешности операции.
 
         :param vacancy: Словарь с данными вакансии.
 
@@ -87,7 +91,7 @@ class JSONSaver(BaseSaver):
 
         vacancy_url = vacancy["Ссылка на вакансию"]
         if vacancy_url not in self._url_cache:
-            return None
+            return False
 
         try:
             with open(self._path_to_file, "r+", encoding="utf-8") as file:
@@ -108,3 +112,5 @@ class JSONSaver(BaseSaver):
 
         except json.JSONDecodeError as error:
             raise ValueError("Файл поврежден или пуст") from error
+
+        return True

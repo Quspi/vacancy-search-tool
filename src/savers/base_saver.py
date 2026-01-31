@@ -45,7 +45,7 @@ class BaseSaver(ABC):
         self._load_cache()
 
     @abstractmethod
-    def add_vacancy(self, vacancy: dict[str, int | str]) -> None:
+    def add_vacancy(self, vacancy: dict[str, int | str]) -> bool:
         """
         Добавляет одну вакансию в файл.
 
@@ -56,7 +56,7 @@ class BaseSaver(ABC):
         ...
 
     @abstractmethod
-    def delete_vacancy(self, vacancy: dict[str, int | str]) -> None:
+    def delete_vacancy(self, vacancy: dict[str, int | str]) -> bool:
         """
         Удаляет одну вакансию из файла.
 
