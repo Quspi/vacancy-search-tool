@@ -112,7 +112,7 @@ class BaseVacancy(ABC):
 
     @classmethod
     @abstractmethod
-    def from_dict(cls, vacancies_dict: dict) -> "BaseVacancy":
+    def from_api(cls, vacancies_dict: dict) -> "BaseVacancy":
         """Создаёт экземпляр вакансии из словаря."""
         ...
 

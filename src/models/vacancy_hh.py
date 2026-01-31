@@ -137,7 +137,7 @@ class VacancyHH(BaseVacancy):
         return [cls.from_dict(vacancy) for vacancy in vacancies_list]
 
     @classmethod
-    def from_dict(cls, vacancies_dict: dict) -> "VacancyHH":
+    def from_api(cls, vacancies_dict: dict) -> "VacancyHH":
         """
         Создаёт экземпляр VacancyHH из словаря с данными вакансии.
         Для отсутствующих ключей используются пустые строки или 0.
