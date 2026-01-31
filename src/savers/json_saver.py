@@ -51,8 +51,7 @@ class JSONSaver(BaseSaver):
 
         :raises ValueError: Если структура данных вакансии неверна.
         """
-        if "Ссылка на вакансию" not in vacancy or len(vacancy) != 7:
-            raise ValueError("Ошибка в структуре данных вакансии")
+        self._validate_vacancy(vacancy)
 
         vacancy_url = vacancy["Ссылка на вакансию"]
         if vacancy_url in self._url_cache:
@@ -84,8 +83,7 @@ class JSONSaver(BaseSaver):
         :raises FileNotFoundError: Если файл не найден.
         :raises ValueError: Если файл повреждён.
         """
-        if "Ссылка на вакансию" not in vacancy or len(vacancy) != 7:
-            raise ValueError("Ошибка в структуре данных вакансии")
+        self._validate_vacancy(vacancy)
 
         vacancy_url = vacancy["Ссылка на вакансию"]
         if vacancy_url not in self._url_cache:
