@@ -1,5 +1,5 @@
 import datetime
-from typing import Optional
+from typing import Optional, Union
 
 from src.models.base_vacancy import BaseVacancy
 from src.utils.validator import Validator
@@ -39,89 +39,101 @@ class VacancyHH(BaseVacancy):
         """Строковое представление вакансии."""
         return f"{self.name}, {self.salary}, {self.experience}, {self.area}"
 
-    def __lt__(self, other: object) -> bool:
+    def __lt__(self, other: Union[object, int, float]) -> bool:
         """
         Сравнивает вакансии по зарплате.
 
-        :param other: Объект для сравнения.
+        :param other: Объект BaseVacancy или число для сравнения.
 
         :return: True, если зарплата текущей вакансии меньше.
 
-        :raises TypeError: Если other не является экземпляром BaseVacancy.
+        :raises TypeError: Если other не является экземпляром BaseVacancy или числом.
         """
-        if not isinstance(other, BaseVacancy):
-            raise TypeError("Сравнение возможно только с объектами BaseVacancy")
-        return self.salary < other.salary
+        if not isinstance(other, (BaseVacancy, int, float)):
+            raise TypeError("Сравнение возможно только с числами или объектами BaseVacancy")
+        if isinstance(other, BaseVacancy):
+            return self.salary < other.salary
+        return self.salary < other
 
-    def __le__(self, other: object) -> bool:
+    def __le__(self, other: Union[object, int, float]) -> bool:
         """
         Сравнивает вакансии по зарплате.
 
-        :param other: Объект для сравнения.
+        :param other: Объект BaseVacancy или число для сравнения.
 
         :return: True, если зарплата текущей вакансии меньше или равна.
 
         :raises TypeError: Если other не является экземпляром BaseVacancy.
         """
-        if not isinstance(other, BaseVacancy):
-            raise TypeError("Сравнение возможно только с объектами BaseVacancy")
-        return self.salary <= other.salary
+        if not isinstance(other, (BaseVacancy, int, float)):
+            raise TypeError("Сравнение возможно только с числами или объектами BaseVacancy")
+        if isinstance(other, BaseVacancy):
+            return self.salary <= other.salary
+        return self.salary <= other
 
-    def __eq__(self, other: object) -> bool:
+    def __eq__(self, other: Union[object, int, float]) -> bool:
         """
         Сравнивает вакансии по зарплате.
 
-        :param other: Объект для сравнения.
+        :param other: Объект BaseVacancy или число для сравнения.
 
         :return: True, если зарплаты равны.
 
         :raises TypeError: Если other не является экземпляром BaseVacancy.
         """
-        if not isinstance(other, BaseVacancy):
-            raise TypeError("Сравнение возможно только с объектами BaseVacancy")
-        return self.salary == other.salary
+        if not isinstance(other, (BaseVacancy, int, float)):
+            raise TypeError("Сравнение возможно только с числами или объектами BaseVacancy")
+        if isinstance(other, BaseVacancy):
+            return self.salary == other.salary
+        return self.salary == other
 
-    def __ne__(self, other: object) -> bool:
+    def __ne__(self, other: Union[object, int, float]) -> bool:
         """
         Сравнивает вакансии по зарплате.
 
-        :param other: Объект для сравнения.
+        :param other: Объект BaseVacancy или число для сравнения.
 
         :return: True, если зарплаты не равны.
 
         :raises TypeError: Если other не является экземпляром BaseVacancy.
         """
-        if not isinstance(other, BaseVacancy):
-            raise TypeError("Сравнение возможно только с объектами BaseVacancy")
-        return self.salary != other.salary
+        if not isinstance(other, (BaseVacancy, int, float)):
+            raise TypeError("Сравнение возможно только с числами или объектами BaseVacancy")
+        if isinstance(other, BaseVacancy):
+            return self.salary != other.salary
+        return self.salary != other
 
-    def __gt__(self, other: object) -> bool:
+    def __gt__(self, other: Union[object, int, float]) -> bool:
         """
         Сравнивает вакансии по зарплате.
 
-        :param other: Объект для сравнения.
+        :param other: Объект BaseVacancy или число для сравнения.
 
         :return: True, если зарплата текущей вакансии больше.
 
         :raises TypeError: Если other не является экземпляром BaseVacancy.
         """
-        if not isinstance(other, BaseVacancy):
-            raise TypeError("Сравнение возможно только с объектами BaseVacancy")
-        return self.salary > other.salary
+        if not isinstance(other, (BaseVacancy, int, float)):
+            raise TypeError("Сравнение возможно только с числами или объектами BaseVacancy")
+        if isinstance(other, BaseVacancy):
+            return self.salary > other.salary
+        return self.salary > other
 
-    def __ge__(self, other: object) -> bool:
+    def __ge__(self, other: Union[object, int, float]) -> bool:
         """
         Сравнивает вакансии по зарплате.
 
-        :param other: Объект для сравнения.
+        :param other: Объект BaseVacancy или число для сравнения.
 
         :return: True, если зарплата текущей вакансии больше или равна.
 
         :raises TypeError: Если other не является экземпляром BaseVacancy.
         """
-        if not isinstance(other, BaseVacancy):
-            raise TypeError("Сравнение возможно только с объектами BaseVacancy")
-        return self.salary >= other.salary
+        if not isinstance(other, (BaseVacancy, int, float)):
+            raise TypeError("Сравнение возможно только с числами или объектами BaseVacancy")
+        if isinstance(other, BaseVacancy):
+            return self.salary >= other.salary
+        return self.salary >= other
 
     @classmethod
     def from_api_list(cls, vacancies_list: list[dict]) -> list["BaseVacancy"]:

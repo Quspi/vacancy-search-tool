@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Union
 
 
 class BaseVacancy(ABC):
@@ -33,11 +34,11 @@ class BaseVacancy(ABC):
         ...
 
     @abstractmethod
-    def __lt__(self, other: object) -> bool:
+    def __lt__(self, other: Union[object, int, float]) -> bool:
         """
         Сравнивает вакансии по зарплате.
 
-        :param other: Объект для сравнения.
+        :param other: Объект BaseVacancy или число для сравнения.
 
         :return: True, если зарплата текущей вакансии меньше.
 
@@ -46,11 +47,11 @@ class BaseVacancy(ABC):
         ...
 
     @abstractmethod
-    def __le__(self, other: object) -> bool:
+    def __le__(self, other: Union[object, int, float]) -> bool:
         """
         Сравнивает вакансии по зарплате.
 
-        :param other: Объект для сравнения.
+        :param other: Объект BaseVacancy или число для сравнения.
 
         :return: True, если зарплата текущей вакансии меньше или равна.
 
@@ -59,11 +60,11 @@ class BaseVacancy(ABC):
         ...
 
     @abstractmethod
-    def __eq__(self, other: object) -> bool:
+    def __eq__(self, other: Union[object, int, float]) -> bool:
         """
         Сравнивает вакансии по зарплате.
 
-        :param other: Объект для сравнения.
+        :param other: Объект BaseVacancy или число для сравнения.
 
         :return: True, если зарплаты равны.
 
@@ -72,11 +73,11 @@ class BaseVacancy(ABC):
         ...
 
     @abstractmethod
-    def __ne__(self, other: object) -> bool:
+    def __ne__(self, other: Union[object, int, float]) -> bool:
         """
         Сравнивает вакансии по зарплате.
 
-        :param other: Объект для сравнения.
+        :param other: Объект BaseVacancy или число для сравнения.
 
         :return: True, если зарплаты не равны.
 
@@ -85,11 +86,11 @@ class BaseVacancy(ABC):
         ...
 
     @abstractmethod
-    def __gt__(self, other: object) -> bool:
+    def __gt__(self, other: Union[object, int, float]) -> bool:
         """
         Сравнивает вакансии по зарплате.
 
-        :param other: Объект для сравнения.
+        :param other: Объект BaseVacancy или число для сравнения.
 
         :return: True, если зарплата текущей вакансии больше.
 
@@ -98,11 +99,11 @@ class BaseVacancy(ABC):
         ...
 
     @abstractmethod
-    def __ge__(self, other: object) -> bool:
+    def __ge__(self, other: Union[object, int, float]) -> bool:
         """
         Сравнивает вакансии по зарплате.
 
-        :param other: Объект для сравнения.
+        :param other: Объект BaseVacancy или число для сравнения.
 
         :return: True, если зарплата текущей вакансии больше или равна.
 
