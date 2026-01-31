@@ -33,7 +33,7 @@ class HeadHunterAPI(BaseAPI):
         self, search_text: str, salary: int, excluded_text: Optional[str] = None
     ) -> list[dict[str, Any]]:
         """
-        Получает список вакансий по заданным параметрам поиска.
+        Получает список вакансий с зарплатой в рублях по заданным параметрам поиска.
 
         :param search_text: Текст для поиска в вакансиях.
         :param salary: Минимальная зарплата для поиска в вакансиях.
@@ -58,7 +58,11 @@ class HeadHunterAPI(BaseAPI):
             if not vacancies_json:
                 break
 
-            vacancies.extend(vacancies_json)
+            for vacancy in vacancies_json:
+                salary = vacancy.get("salary")
+                if salary is None or salary.get("currency") == "RUR":
+                    vacancies.append(vacancy)
+
             page += 1
 
         return vacancies
