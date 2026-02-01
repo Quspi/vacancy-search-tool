@@ -63,7 +63,7 @@ class JSONSaver(BaseSaver):
                 data = json.load(file)
 
                 data.append(vacancy)
-                self._url_cache.add(vacancy_url)
+                self._url_cache.add(str(vacancy_url))
 
                 file.seek(0)
                 file.truncate()
@@ -72,7 +72,7 @@ class JSONSaver(BaseSaver):
         except (FileNotFoundError, json.JSONDecodeError):
             with open(self._path_to_file, "w", encoding="utf-8") as file:
                 json.dump([vacancy], file, indent=4, ensure_ascii=False)
-                self._url_cache.add(vacancy_url)
+                self._url_cache.add(str(vacancy_url))
 
         return True
 
@@ -105,7 +105,7 @@ class JSONSaver(BaseSaver):
                 file.seek(0)
                 file.truncate()
                 json.dump(data, file, indent=4, ensure_ascii=False)
-                self._url_cache.remove(vacancy_url)
+                self._url_cache.remove(str(vacancy_url))
 
         except FileNotFoundError:
             raise FileNotFoundError("Файл не найден или удален")

@@ -40,7 +40,7 @@ class BaseSaver(ABC):
         Validator.str_validation(filename, "Имя файла должно быть строкой")
         os.makedirs(self._PATH_TO_DATA, exist_ok=True)
         self._path_to_file = os.path.join(self._PATH_TO_DATA, f"{filename}.{self._extension}")
-        self._url_cache: set[str | int] = set()
+        self._url_cache: set[str] = set()
         self._load_cache()
 
     @abstractmethod

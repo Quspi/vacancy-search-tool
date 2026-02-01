@@ -65,7 +65,7 @@ class ExcelSaver(BaseSaver):
 
         result_data = pd.concat([df, vacancy_df], ignore_index=True)
         result_data.to_excel(self._path_to_file, index=False)
-        self._url_cache.add(vacancy_url)
+        self._url_cache.add(str(vacancy_url))
 
         return True
 
@@ -96,6 +96,6 @@ class ExcelSaver(BaseSaver):
 
         new_df: pd.DataFrame = df.loc[df["Ссылка на вакансию"] != vacancy_url]
         new_df.to_excel(self._path_to_file, index=False)
-        self._url_cache.remove(vacancy_url)
+        self._url_cache.remove(str(vacancy_url))
 
         return True
