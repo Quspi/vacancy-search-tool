@@ -1,6 +1,5 @@
 import os
 from abc import ABC, abstractmethod
-from typing import Any
 
 from src.utils.validator import Validator
 
@@ -41,7 +40,7 @@ class BaseSaver(ABC):
         Validator.str_validation(filename, "Имя файла должно быть строкой")
         os.makedirs(self._PATH_TO_DATA, exist_ok=True)
         self._path_to_file = os.path.join(self._PATH_TO_DATA, f"{filename}.{self._extension}")
-        self._url_cache: set[str | Any] = set()
+        self._url_cache: set[str | int] = set()
         self._load_cache()
 
     @abstractmethod
@@ -109,4 +108,4 @@ class BaseSaver(ABC):
             data = self.get_all_vacancies()
             for vacancy in data:
                 vacancy_url = vacancy.get("Ссылка на вакансию")
-                self._url_cache.add(vacancy_url)
+                self._url_cache.add(str(vacancy_url))
