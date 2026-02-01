@@ -37,16 +37,16 @@ def user_interaction() -> None:
 
     count = len(filtered_vacancies)
     if count == 0:
-        print("Не найдено вакансий подходящих под условия поиска\nПрограмма завершила работу")
+        print("Не найдено вакансий удовлетворяющим условиям поиска\nПрограмма завершила работу")
         return
-
-    if ask_question("Отсортировать вакансии по уровню з/п?"):
-        filtered_vacancies = sort_by_salary(filtered_vacancies)
-        print("Вакансии отсортированы по уровню з/п, вакансии в которых не указан уровень з/п перемещены в конец")
 
     print(
         f"Найдено {count} вакансий удовлетворяющим условиям поиска, включая вакансии в которых не указан уровень з/п"
     )
+    if ask_question("Отсортировать вакансии по уровню з/п?"):
+        filtered_vacancies = sort_by_salary(filtered_vacancies)
+        print("Вакансии отсортированы по уровню з/п, вакансии в которых не указан уровень з/п перемещены в конец")
+
     quantity_vacancies = get_quantity_vacancies()
     choice = choice_menu()
     output_data(filtered_vacancies, choice, quantity_vacancies)
