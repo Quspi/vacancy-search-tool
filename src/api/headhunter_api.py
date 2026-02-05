@@ -15,18 +15,11 @@ class HeadHunterAPI(BaseAPI):
     __API_URL: str = "https://api.hh.ru/vacancies"
     __HEADERS: dict = {"HH-User-Agent": "Python learn app/1.0 (olegtamanov@gmail.com)"}
 
-    __params: dict
-
-    def __init__(self) -> None:
-        """
-        Инициализирует экземпляр класса HeadHunterAPI.
-        Устанавливает базовые параметры запроса.
-        """
-        self.__params = {
-            "per_page": 100,
-            "area": "113",
-            "period": 7,
-        }
+    __params: dict = {
+        "per_page": 100,
+        "area": "113",
+        "period": 7,
+    }
 
     def get_vacancies(self, search_text: str, excluded_text: Optional[str] = None) -> list[dict[str, Any]]:
         """
