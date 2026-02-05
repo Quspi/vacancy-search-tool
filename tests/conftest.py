@@ -1,6 +1,7 @@
 import pytest
 
 from src.api.headhunter_api import HeadHunterAPI
+from src.models.vacancy_hh import VacancyHH
 
 
 @pytest.fixture
@@ -54,7 +55,7 @@ def hh_vacancies():
             },
             {
                 "name": "Аналитик данных (Product & Business Intelligence)",
-                "salary": None,
+                "salary": {"currency": "RUR"},
                 "published_at": "2026-02-04T15:43:52+0300",
                 "alternate_url": "https://hh.ru/vacancy/130171987",
                 "snippet": {"responsibility": "Методология: Формализация логики расчета метрик и"},
@@ -293,6 +294,21 @@ def hh_vacancies():
 
 
 @pytest.fixture
+def vacancies_from_hh(hh_vacancies):
+    return hh_vacancies["items"]
+
+
+@pytest.fixture
 def hh_api():
     api_hh = HeadHunterAPI()
     return api_hh
+
+
+@pytest.fixture
+def vacancy_1():
+    return VacancyHH("name", 95000, "05.02.2026", "https://hh.ru/vacancy/", "test", "experience", "area")
+
+
+@pytest.fixture
+def vacancy_2():
+    return VacancyHH("name", 50000, "05.02.2026", "https://hh.ru/vacancy/", "test", "experience", "area")
