@@ -17,22 +17,22 @@ def test_vacancy_hh_init(vacancy_1):
 
 def test_vacancy_hh_init_invalid_date():
     with pytest.raises(ValueError, match="Дата должна быть строкой"):
-        vacancy_1 = VacancyHH("name", 95000, 15022026, "https://hh.ru/vacancy/", "test", "experience", "area")
+        VacancyHH("name", 95000, 15022026, "https://hh.ru/vacancy/", "test", "experience", "area")
 
 
 def test_vacancy_hh_init_invalid_format_date():
     with pytest.raises(ValueError, match="Дата должна быть в формате ДД.ММ.ГГГГ."):
-        vacancy_1 = VacancyHH("name", 95000, "2026.11.15", "https://hh.ru/vacancy/", "test", "experience", "area")
+        VacancyHH("name", 95000, "2026.11.15", "https://hh.ru/vacancy/", "test", "experience", "area")
 
 
 def test_vacancy_hh_init_invalid_format_url():
     with pytest.raises(ValueError, match="Некорректный url вакансии."):
-        vacancy_1 = VacancyHH("name", 95000, "05.02.2026", "https://hh.ru/vk.ru", "test", "experience", "area")
+        VacancyHH("name", 95000, "05.02.2026", "https://hh.ru/vk.ru", "test", "experience", "area")
 
 
 def test_vacancy_hh_init_invalid_salary():
     with pytest.raises(ValueError, match="Зарплата должна быть положительным числом"):
-        vacancy_1 = VacancyHH("name", -95000, "05.02.2026", "https://hh.ru/vacancy/", "test", "experience", "area")
+        VacancyHH("name", -95000, "05.02.2026", "https://hh.ru/vacancy/", "test", "experience", "area")
 
 
 def test_str_vacancy_hh(vacancy_1):
