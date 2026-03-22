@@ -1,0 +1,365 @@
+import pytest
+
+from src.api.headhunter_api import HeadHunterAPI
+from src.models.vacancy_hh import VacancyHH
+
+
+@pytest.fixture
+def hh_vacancies():
+    vacancies_data = {
+        "items": [
+            {
+                "name": "Аналитик данных",
+                "salary": None,
+                "published_at": "2026-02-04T15:23:55+0300",
+                "alternate_url": "https://hh.ru/vacancy/130171080",
+                "snippet": {"responsibility": "Написание сложных SQL-запросов для извлечения..."},
+                "experience": {"name": "От 1 года до 3 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Специалист по ведению базы данных / Менеджер отдела сопровождения",
+                "salary": {"from": 90000, "to": 110000, "currency": "RUR", "gross": False},
+                "published_at": "2026-02-02T16:49:12+0300",
+                "alternate_url": "https://hh.ru/vacancy/130100802",
+                "snippet": {"responsibility": "Поддержание в актуальном состоянии технической информации."},
+                "experience": {"name": "От 1 года до 3 лет"},
+                "area": {"name": "Санкт-Петербург"},
+            },
+            {
+                "name": "Фронтенд и бэкенд разработчик",
+                "salary": {"from": 300000, "to": 400000, "currency": "RUR", "gross": True},
+                "published_at": "2026-02-03T20:01:02+0300",
+                "alternate_url": "https://hh.ru/vacancy/130143835",
+                "snippet": {"responsibility": "Разработка и поддержка фронтенд- и бэкенд-частей современного "},
+                "experience": {"name": "Более 6 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "ML / AI Engineer",
+                "salary": {"from": 250000, "to": 500000, "currency": "RUR", "gross": False},
+                "published_at": "2026-02-03T02:19:11+0300",
+                "alternate_url": "https://hh.ru/vacancy/130106642",
+                "snippet": {"responsibility": "ComfyUI — прототипирование и референс пайплайнов. Python‑runner "},
+                "experience": {"name": "Нет опыта"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Стажер-аналитик данных",
+                "salary": {"from": None, "to": 72000, "currency": "RUR", "gross": True},
+                "published_at": "2026-02-03T15:33:42+0300",
+                "alternate_url": "https://hh.ru/vacancy/130135345",
+                "snippet": {"responsibility": "Подготавливать сегменты для коммуникаций по заданным критериям."},
+                "experience": {"name": "Нет опыта"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Аналитик данных (Product & Business Intelligence)",
+                "salary": {"currency": "RUR"},
+                "published_at": "2026-02-04T15:43:52+0300",
+                "alternate_url": "https://hh.ru/vacancy/130171987",
+                "snippet": {"responsibility": "Методология: Формализация логики расчета метрик и"},
+                "experience": {"name": "От 1 года до 3 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Стажер Data Analyst (СберНадежность)",
+                "salary": None,
+                "published_at": "2026-02-05T13:48:00+0300",
+                "alternate_url": "https://hh.ru/vacancy/130206329",
+                "snippet": {"responsibility": "Исследование источников данных. Написание функций и хранимых процедур"},
+                "experience": {"name": "Нет опыта"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "ETL Python Developer",
+                "salary": {"from": 100000, "to": 200000, "currency": "RUR", "gross": True},
+                "published_at": "2026-02-05T11:45:53+0300",
+                "alternate_url": "https://hh.ru/vacancy/130200252",
+                "snippet": {"responsibility": "Автоматизация извлечения, обработки и загрузки данных."},
+                "experience": {"name": "От 1 года до 3 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Python Backend разработчик (FastAPI)",
+                "salary": None,
+                "published_at": "2026-02-02T12:51:51+0300",
+                "alternate_url": "https://hh.ru/vacancy/130086103",
+                "snippet": {"responsibility": "Разработка и поддержка backend-сервисов на Python (FastAPI)."},
+                "experience": {"name": "От 1 года до 3 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Младший аналитик",
+                "salary": None,
+                "published_at": "2026-02-03T11:27:14+0300",
+                "alternate_url": "https://hh.ru/vacancy/130121377",
+                "snippet": {"responsibility": "Сбор, систематизация и мониторинг отраслевых рынков (запчасти, авто)."},
+                "experience": {"name": "Нет опыта"},
+                "area": {"name": "Санкт-Петербург"},
+            },
+            {
+                "name": "Аналитик данных",
+                "salary": None,
+                "published_at": "2026-02-04T13:21:42+0300",
+                "alternate_url": "https://hh.ru/vacancy/130165156",
+                "snippet": {
+                    "responsibility": "Проводить продуктовые исследования. Автоматизировать существующие и со"
+                },
+                "experience": {"name": "От 3 до 6 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Младший разработчик Python (FastAPI)",
+                "salary": {"from": 80000, "to": None, "currency": "RUR", "gross": False},
+                "published_at": "2026-02-03T11:42:52+0300",
+                "alternate_url": "https://hh.ru/vacancy/130122335",
+                "snippet": {
+                    "responsibility": "Разработка и поддержка сервиса на FastAPI (участие в разработке нового "
+                },
+                "experience": {"name": "Нет опыта"},
+                "area": {"name": "Санкт-Петербург"},
+            },
+            {
+                "name": "Junior Python-разработчик",
+                "salary": None,
+                "published_at": "2026-02-02T13:50:51+0300",
+                "alternate_url": "https://hh.ru/vacancy/130090481",
+                "snippet": {
+                    "responsibility": "Сбором, анализом и формализацией требований от заинтересованных сторон"
+                },
+                "experience": {"name": "Нет опыта"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Тестировщик",
+                "salary": {"from": 170000, "to": 200000, "currency": "RUR", "gross": False},
+                "published_at": "2026-02-03T10:57:50+0300",
+                "alternate_url": "https://hh.ru/vacancy/129746528",
+                "snippet": {
+                    "responsibility": "8 backend разработчиков, C#. Разрабатывать и поддерживать тест-кейсы в"
+                },
+                "experience": {"name": "От 3 до 6 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Аналитик данных",
+                "salary": None,
+                "published_at": "2026-01-30T16:54:19+0300",
+                "alternate_url": "https://hh.ru/vacancy/130054422",
+                "snippet": {"responsibility": "Автоматизация рутинных процессов: выгрузка данных через SQLи Python,"},
+                "experience": {"name": "От 1 года до 3 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "QA Fullstack Engineer (Акционные механики)",
+                "salary": None,
+                "published_at": "2026-02-05T12:00:26+0300",
+                "alternate_url": "https://hh.ru/vacancy/130201137",
+                "snippet": {
+                    "responsibility": "Язык: Python (активно используем асинхронность asyncio). UI Framework:"
+                },
+                "experience": {"name": "От 3 до 6 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Backend-разработчик Python (Внутренняя разработка)",
+                "salary": None,
+                "published_at": "2026-02-03T21:08:44+0300",
+                "alternate_url": "https://hh.ru/vacancy/130144180",
+                "snippet": {"responsibility": "Разработка и поддержка функционала существующих сервисов,"},
+                "experience": {"name": "От 3 до 6 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "QA (web+mobile) специалист",
+                "salary": None,
+                "published_at": "2026-02-02T15:48:49+0300",
+                "alternate_url": "https://hh.ru/vacancy/130097516",
+                "snippet": {"responsibility": "Тестирование web, мобильных приложений (iOS и Android)"},
+                "experience": {"name": "От 3 до 6 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Дата-инженер (Data Engineer)",
+                "salary": None,
+                "published_at": "2026-02-03T19:13:13+0300",
+                "alternate_url": "https://hh.ru/vacancy/130143188",
+                "snippet": {"responsibility": "Автоматизировать и поддерживать дата-пайплайны (ETL/ELT)."},
+                "experience": {"name": "От 3 до 6 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Data Analyst",
+                "salary": None,
+                "published_at": "2026-02-04T10:49:32+0300",
+                "alternate_url": "https://hh.ru/vacancy/130156696",
+                "snippet": {"responsibility": "Оценка эффективности внедренных изменений (A/B-тестирование,"},
+                "experience": {"name": "От 1 года до 3 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "C# Tools Programmer",
+                "salary": None,
+                "published_at": "2026-02-04T14:23:27+0300",
+                "alternate_url": "https://hh.ru/vacancy/130168094",
+                "snippet": {"responsibility": "Создание инструментов для разработки игр. Создание внутренних"},
+                "experience": {"name": "От 1 года до 3 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Data scientist",
+                "salary": None,
+                "published_at": "2026-02-03T19:19:54+0300",
+                "alternate_url": "https://hh.ru/vacancy/130143277",
+                "snippet": {"responsibility": "Разрабатывать ML-сервисы, связанных с обработкой естественного"},
+                "experience": {"name": "От 1 года до 3 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Аналитик",
+                "salary": None,
+                "published_at": "2026-02-04T18:26:55+0300",
+                "alternate_url": "https://hh.ru/vacancy/130181048",
+                "snippet": {"responsibility": "Реализация новых интеграций с внешними информационными системами"},
+                "experience": {"name": "От 1 года до 3 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Риск-аналитик в VK",
+                "salary": None,
+                "published_at": "2026-02-04T19:28:00+0300",
+                "alternate_url": "https://hh.ru/vacancy/130181185",
+                "snippet": {"responsibility": "Разработка, валидация и поддержка количественных"},
+                "experience": {"name": "Нет опыта"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Python Developer",
+                "salary": {"from": 50000, "to": 70000, "currency": "RUR", "gross": False},
+                "published_at": "2026-02-02T15:01:29+0300",
+                "alternate_url": "https://hh.ru/vacancy/130094855",
+                "snippet": {"responsibility": "Ежедневное код-ревью от коллег и советы по улучшению качества кода."},
+                "experience": {"name": "От 1 года до 3 лет"},
+                "area": {"name": "Тюмень"},
+            },
+            {
+                "name": "DevOps-инженер",
+                "salary": None,
+                "published_at": "2026-02-05T10:24:10+0300",
+                "alternate_url": "https://hh.ru/vacancy/130195851",
+                "snippet": {"responsibility": "Развертывание новых серверов, включая подбор оптимальных "},
+                "experience": {"name": "От 3 до 6 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Младший (junior) программист Python",
+                "salary": {"from": 37050, "to": 78750, "currency": "RUR", "gross": True},
+                "published_at": "2026-01-30T16:03:56+0300",
+                "alternate_url": "https://hh.ru/vacancy/130051520",
+                "snippet": {"responsibility": "Разработка драйверов устройств и/или высокоуровневой логики."},
+                "experience": {"name": "Нет опыта"},
+                "area": {"name": "Воронеж"},
+            },
+            {
+                "name": "Backend-разработчик",
+                "salary": None,
+                "published_at": "2026-02-03T15:39:12+0300",
+                "alternate_url": "https://hh.ru/vacancy/130135592",
+                "snippet": {"responsibility": "Разработка и развитие backend-части продукта на Python + FastAPI."},
+                "experience": {"name": "От 3 до 6 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Data Engineer [Junior]",
+                "salary": None,
+                "published_at": "2026-02-04T16:11:19+0300",
+                "alternate_url": "https://hh.ru/vacancy/130173457",
+                "snippet": {"responsibility": "Выстроили систему взаимодействия — никаких бесконечных чатов в ТГ."},
+                "experience": {"name": "От 1 года до 3 лет"},
+                "area": {"name": "Москва"},
+            },
+            {
+                "name": "Data Analyst / Аналитик данных",
+                "salary": None,
+                "published_at": "2026-01-30T14:58:47+0300",
+                "alternate_url": "https://hh.ru/vacancy/130048091",
+                "snippet": {"responsibility": "Собирать информацию по источникам данных и их структуре."},
+                "experience": {"name": "От 1 года до 3 лет"},
+                "area": {"name": "Москва"},
+            },
+        ]
+    }
+    return vacancies_data
+
+
+@pytest.fixture
+def vacancies_from_hh(hh_vacancies):
+    return hh_vacancies["items"]
+
+
+@pytest.fixture
+def hh_api():
+    api_hh = HeadHunterAPI()
+    return api_hh
+
+
+@pytest.fixture
+def vacancy_1():
+    return VacancyHH("name", 95000, "05.02.2026", "https://hh.ru/vacancy/", "test", "experience", "area")
+
+
+@pytest.fixture
+def vacancy_2():
+    return VacancyHH("name", 50000, "05.02.2026", "https://hh.ru/vacancy/", "test", "experience", "area")
+
+
+@pytest.fixture
+def valid_vacancies():
+    return [
+        {
+            "Название вакансии": "Аналитик данных",
+            "Заработная плата": 0,
+            "Дата публикации": "2026-02-04T15:23:55+0300",
+            "Ссылка на вакансию": "https://hh.ru/vacancy/130171080",
+            "Обязанности": "Написание сложных SQL-запросов для извлечения...",
+            "Опыт работы": "От 1 года до 3 лет",
+            "Город": "Москва",
+        },
+        {
+            "Название вакансии": "Специалист по ведению базы данных / Менеджер отдела сопровождения",
+            "Заработная плата": 90000,
+            "Дата публикации": "2026-02-02T16:49:12+0300",
+            "Ссылка на вакансию": "https://hh.ru/vacancy/130100802",
+            "Обязанности": "Поддержание в актуальном состоянии технической информации.",
+            "Опыт работы": "От 1 года до 3 лет",
+            "Город": "Санкт-Петербург",
+        },
+        {
+            "Название вакансии": "Фронтенд и бэкенд разработчик",
+            "Заработная плата": 300000,
+            "Дата публикации": "2026-02-03T20:01:02+0300",
+            "Ссылка на вакансию": "https://hh.ru/vacancy/130143835",
+            "Обязанности": "Разработка и поддержка фронтенд- и бэкенд-частей современного ",
+            "Опыт работы": "Более 6 лет",
+            "Город": "Москва",
+        },
+        {
+            "Название вакансии": "ML / AI Engineer",
+            "Заработная плата": 250000,
+            "Дата публикации": "2026-02-03T02:19:11+0300",
+            "Ссылка на вакансию": "https://hh.ru/vacancy/130106642",
+            "Обязанности": "ComfyUI — прототипирование и референс пайплайнов. Python‑runner ",
+            "Опыт работы": "Нет опыта",
+            "Город": "Москва",
+        },
+        {
+            "Название вакансии": "Стажер-аналитик данных",
+            "Заработная плата": 72000,
+            "Дата публикации": "2026-02-03T15:33:42+0300",
+            "Ссылка на вакансию": "https://hh.ru/vacancy/130135345",
+            "Обязанности": "Подготавливать сегменты для коммуникаций по заданным критериям.",
+            "Опыт работы": "Нет опыта",
+            "Город": "Москва",
+        },
+    ]
